@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/CSS/style.css">
+    <title>Dog And Cat Classifier</title>
+</head>
+<body>
+    <div class="card">
+        <div class="img">
+
+            <h2>Cat And Dog Image Classifier</h2>
+
+
+            <div id="imagePreview"></div>
+
+
+
+            <form method="POST" action="{% url 'predict' %}" enctype="multipart/form-data">
+            
+            <label class="button" for="inputImage">
+
+            <span class="button-icon"></span>
+            Upload Image
+            </label>
+            <input type="file" accept="image/*" id="inputImage" name="image" style="display: none;">
+            </form>
+        </div>
+    </div>
+    <script>
+        const inputImage = document.getElementById('inputImage');
+        const imagePreview = document.getElementById('imagePreview');
+
+        inputImage.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    imagePreview.style.display = 'block';
+                    imagePreview.innerHTML = '';
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '300px';
+                    img.style.height = '300px';
+                    img.style.objectFit = 'cover';
+                    imagePreview.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
